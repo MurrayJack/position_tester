@@ -1,16 +1,14 @@
 import * as enzyme from "enzyme";
 import * as React from "react";
 import * as ReactDom from "react-dom";
+import { positionFix } from "./position";
 
 const EnzymeAdapter = require("enzyme-adapter-react-16");
 enzyme.configure({ adapter: new EnzymeAdapter() });
 
-import { positionFix } from "./position";
-
 describe("position", () => {
   describe("x axis tests", () => {
-    //
-    it("BottomRight => no movement", () => {
+    it("Right => no movement", () => {
       const test = positionFix(
         "Left",
         "Bottom",
@@ -18,10 +16,21 @@ describe("position", () => {
         { Top: 0, Left: 0, Width: 20, Height: 20 },
         { Width: 200, Height: 200 }
       );
-      expect(test.Position).toEqual("None");
+      expect(test.x).toEqual("");
     });
 
-    it("BottomLeft -> BottomRight", () => {
+    it("Left -> no movement", () => {
+      const test = positionFix(
+        "Right",
+        "Bottom",
+        { Width: 1000, Height: 1000 },
+        { Top: 0, Left: 980, Width: 20, Height: 20 },
+        { Width: 200, Height: 200 }
+      );
+      expect(test.x).toEqual("");
+    });
+
+    it("Left -> Right", () => {
       const test = positionFix(
         "Left",
         "Bottom",
@@ -29,10 +38,10 @@ describe("position", () => {
         { Top: 0, Left: 980, Width: 20, Height: 20 },
         { Width: 200, Height: 200 }
       );
-      expect(test.Position).toEqual("BottomRight");
+      expect(test.x).toEqual("Right");
     });
 
-    it("BottomRight -> BottomLeft", () => {
+    it("Right -> Left", () => {
       const test = positionFix(
         "Right",
         "Bottom",
@@ -40,18 +49,53 @@ describe("position", () => {
         { Top: 0, Left: 0, Width: 20, Height: 20 },
         { Width: 200, Height: 200 }
       );
-      expect(test.Position).toEqual("BottomLeft");
+      expect(test.x).toEqual("Left");
     });
+  });
 
-    it("BottomLeft -> no movement", () => {
+  describe("y axis tests", () => {
+    it("Bottom -> no movement", () => {
       const test = positionFix(
-        "Right",
+        "Left",
         "Bottom",
         { Width: 1000, Height: 1000 },
-        { Top: 0, Left: 980, Width: 20, Height: 20 },
+        { Top: 0, Left: 0, Width: 20, Height: 20 },
         { Width: 200, Height: 200 }
       );
-      expect(test.Position).toEqual("None");
+      expect(test.y).toEqual("");
+    });
+
+    it("Top -> no movement", () => {
+      const test = positionFix(
+        "Left",
+        "Top",
+        { Width: 1000, Height: 1000 },
+        { Top: 980, Left: 0, Width: 20, Height: 20 },
+        { Width: 200, Height: 200 }
+      );
+      expect(test.y).toEqual("");
+    });
+
+    it("Bottom -> Top", () => {
+      const test = positionFix(
+        "Left",
+        "Bottom",
+        { Width: 1000, Height: 1000 },
+        { Top: 980, Left: 0, Width: 20, Height: 20 },
+        { Width: 200, Height: 200 }
+      );
+      expect(test.y).toEqual("Top");
+    });
+
+    it("Top -> Bottom", () => {
+      const test = positionFix(
+        "Left",
+        "Top",
+        { Width: 1000, Height: 1000 },
+        { Top: 0, Left: 0, Width: 20, Height: 20 },
+        { Width: 200, Height: 200 }
+      );
+      expect(test.y).toEqual("Bottom");
     });
   });
 });
