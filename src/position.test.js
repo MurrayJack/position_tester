@@ -1,6 +1,4 @@
 import * as enzyme from "enzyme";
-import * as React from "react";
-import * as ReactDom from "react-dom";
 import { positionFix } from "./position";
 
 const EnzymeAdapter = require("enzyme-adapter-react-16");
@@ -8,7 +6,7 @@ enzyme.configure({ adapter: new EnzymeAdapter() });
 
 describe("position", () => {
   describe("x axis tests", () => {
-    it("Right => no movement", () => {
+    it("Right -> no movement", () => {
       const test = positionFix(
         "Left",
         "Bottom",
