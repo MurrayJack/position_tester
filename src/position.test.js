@@ -8,9 +8,9 @@ enzyme.configure({ adapter: new EnzymeAdapter() });
 import { positionFix } from "./position";
 
 describe("position", () => {
-  describe("BottomLeft", () => {
+  describe("x axis tests", () => {
     //
-    it("putting things in the right place works!", () => {
+    it("BottomRight => no movement", () => {
       const test = positionFix(
         "Left",
         "Bottom",
@@ -18,11 +18,10 @@ describe("position", () => {
         { Top: 0, Left: 0, Width: 20, Height: 20 },
         { Width: 200, Height: 200 }
       );
-
       expect(test.Position).toEqual("None");
     });
 
-    it("BottomRight", () => {
+    it("BottomLeft -> BottomRight", () => {
       const test = positionFix(
         "Left",
         "Bottom",
@@ -30,8 +29,29 @@ describe("position", () => {
         { Top: 0, Left: 980, Width: 20, Height: 20 },
         { Width: 200, Height: 200 }
       );
-
       expect(test.Position).toEqual("BottomRight");
+    });
+
+    it("BottomRight -> BottomLeft", () => {
+      const test = positionFix(
+        "Right",
+        "Bottom",
+        { Width: 1000, Height: 1000 },
+        { Top: 0, Left: 0, Width: 20, Height: 20 },
+        { Width: 200, Height: 200 }
+      );
+      expect(test.Position).toEqual("BottomLeft");
+    });
+
+    it("BottomLeft -> no movement", () => {
+      const test = positionFix(
+        "Right",
+        "Bottom",
+        { Width: 1000, Height: 1000 },
+        { Top: 0, Left: 980, Width: 20, Height: 20 },
+        { Width: 200, Height: 200 }
+      );
+      expect(test.Position).toEqual("None");
     });
   });
 });

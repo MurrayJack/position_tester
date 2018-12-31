@@ -17,8 +17,12 @@ export const positionFix = (x, y, container, fixed, dynamic) => {
 
 const leftRight = (original, fixed, container) => {
   let newPos = "";
-  if (fixed.Left + fixed.Width >= container.Width) {
+  if (original === "Left" && fixed.Left + fixed.Width >= container.Width) {
+    // test left
     newPos = "Right";
+  } else if (original === "Right" && fixed.Left - fixed.Width <= 0) {
+    // test left
+    newPos = "Left";
   }
 
   if (original === newPos) {
